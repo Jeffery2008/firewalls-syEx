@@ -1,0 +1,14 @@
+Script execution started (verbose - main - to file)
+Script execution started (verbose - main)
+Script execution completed (verbose - main)
+r()...
+Script execution started (simplified)
+iptables_parser imported
+Calling parse_iptables_save_file()...
+parse_iptables_save_file() called successfully
+Parsed tables object: {'filter': <iptables_rule_classes.IPTablesTable object at 0x0000024C35968410>}
+Calling generate_c_code()...
+C code generated successfully to: output_smt_dir\iptables-rules\output.smt2
+Script completed (simplified)
+runner() returned
+Script execution completed (verbose)

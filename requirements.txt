@@ -1,0 +1,6 @@
+google-generativeai>=0.3.0
+z3-solver>=4.12.2
+pytest>=7.4.0
+mypy>=1.5.1
+black>=23.7.0
+pre-commit>=3.3.3

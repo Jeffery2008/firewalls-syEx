@@ -1,0 +1,29 @@
+# Include project documentation
+include README.md
+include LICENSE
+include requirements.txt
+
+# Include configuration files
+include translateToEBPFWithLLM/schema.json
+include translateToEBPFWithLLM/.pre-commit-config.yaml
+include translateToEBPFWithLLM/mypy.ini
+include translateToEBPFWithLLM/pytest.ini
+
+# Include example files
+recursive-include examples *.txt
+
+# Include test data
+recursive-include translateToEBPFWithLLM/tests/test_data *.txt
+
+# Include template files
+recursive-include translateToEBPFWithLLM/templates *.py *.j2
+
+# Exclude development files
+global-exclude *.py[cod] __pycache__ *.so .DS_Store
+global-exclude .git* .coverage .pytest_cache
+global-exclude *.log
+global-exclude .env .venv
+
+# Exclude IDE specific files
+global-exclude .vscode/ .idea/
+global-exclude *.swp *.swo

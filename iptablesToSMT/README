@@ -1,0 +1,51 @@
+# iptablesToSMT
+
+The iptablesToSMT tool works in three main steps:
+
+1. Parse iptables rules from a save file into an internal representation
+2. Generate C code that simulates the firewall behavior
+3. Use KLEE symbolic execution to generate SMT formulas representing all possible paths through the firewall
+
+## Prerequisites
+
+- Docker (for running KLEE)
+- Python 3.x
+- iptables
+
+## Installation
+
+1. Clone this repository
+
+2. Start the KLEE Docker container:
+```bash
+docker run --rm -it -v $(pwd):/home/klee/workspace klee/klee
+```
+
+3. Inside the container, navigate to the workspace directory and install dependencies:
+```bash
+cd workspace
+./install.sh
+```
+
+## Usage
+
+1. Save your iptables rules to a file using:
+```bash
+iptables-save > rules.txt
+```
+
+2. Run the conversion tool:
+```bash
+python3 index.py
+```
+
+This will:
+- Parse the iptables rules
+- Generate equivalent C code
+- Use KLEE to produce SMT formulas for each possible path through the firewall
+- Combine the formulas into a single representation of the firewall's behavior
+
+## Output
+
+The tool generates:
+- Two SMT formulas representing the firewall's behavior (one for DROP and ACCEPT actions)

@@ -1,0 +1,14 @@
+name = "gemini-worker"
+main = "src/index.ts"
+compatibility_date = "2024-02-16"
+
+# Configure worker environment
+workers_dev = true
+node_compat = false
+
+[vars]
+# Environment variables are now passed in request body
+
+[[routes]]
+pattern = "gemini-worker.*.workers.dev/*"
+zone_name = "workers.dev"

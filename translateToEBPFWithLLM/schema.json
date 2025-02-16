@@ -1,0 +1,39 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "required": ["api_key", "model", "input_file", "output_directory"],
+    "properties": {
+        "api_key": {
+            "type": "string",
+            "description": "Gemini API key for authentication"
+        },
+        "model": {
+            "type": "string",
+            "description": "Gemini model to use for translation (e.g., gemini-pro)",
+            "default": "gemini-pro"
+        },
+        "input_file": {
+            "type": "string",
+            "description": "Path to input iptables rules file"
+        },
+        "output_directory": {
+            "type": "string",
+            "description": "Directory to save generated eBPF code and logs"
+        },
+        "options": {
+            "type": "object",
+            "properties": {
+                "tc_program": {
+                    "type": "boolean",
+                    "description": "Generate TC (traffic control) program format",
+                    "default": true
+                },
+                "validate_output": {
+                    "type": "boolean",
+                    "description": "Run basic validation on generated eBPF code",
+                    "default": true
+                }
+            }
+        }
+    }
+}

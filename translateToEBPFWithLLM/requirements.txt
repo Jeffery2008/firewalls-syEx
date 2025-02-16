@@ -1,0 +1,21 @@
+# Core dependencies
+google-generativeai>=0.3.0  # For Gemini API integration
+z3-solver>=4.12.0  # For SMT formula verification
+tkinter>=8.6  # For GUI (usually comes with Python)
+
+# Development dependencies
+pytest>=7.4.0
+pytest-cov>=4.1.0
+black>=23.3.0  # For code formatting
+mypy>=1.5.0  # For type checking
+
+# System dependencies
+# Note: These need to be installed via system package manager (apt, yum, etc.)
+# - clang (for eBPF compilation)
+# - llvm (for eBPF compilation)
+# - libbpf-dev (for eBPF headers)
+
+# Optional dependencies
+ipaddress>=1.0.23  # For IP address handling
+pathlib>=1.0.1  # For path manipulation (included in Python 3.5+)
+typing-extensions>=4.5.0  # For advanced type hints

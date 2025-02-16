@@ -1,0 +1,126 @@
+{
+    "iptables_rules": [
+      {
+        "table": "filter",
+        "chain": "INPUT",
+        "policy": "DROP",
+        "rule": ":INPUT DROP [0:0]"
+      },
+      {
+        "table": "filter",
+        "chain": "FORWARD",
+        "policy": "DROP",
+        "rule": ":FORWARD DROP [0:0]"
+      },
+      {
+        "table": "filter",
+        "chain": "OUTPUT",
+        "policy": "ACCEPT",
+        "rule": ":OUTPUT ACCEPT [0:0]"
+      },
+      {
+        "table": "filter",
+        "chain": "INPUT",
+        "rule": "-A INPUT -m state --state INVALID -j DROP",
+        "matches": [
+          {
+            "module": "state",
+            "match": "--state",
+            "value": "INVALID"
+          }
+        ],
+        "target": "DROP"
+      },
+      {
+        "table": "filter",
+        "chain": "INPUT",
+        "rule": "-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT",
+        "matches": [
+          {
+            "module": "state",
+            "match": "--state",
+            "value": "RELATED,ESTABLISHED"
+          }
+        ],
+        "target": "ACCEPT"
+      },
+      {
+        "table": "filter",
+        "chain": "INPUT",
+        "rule": "-A INPUT -i lo -j ACCEPT",
+        "in_interface": "lo",
+        "target": "ACCEPT"
+      },
+      {
+        "table": "filter",
+        "chain": "INPUT",
+        "rule": "-A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT",
+        "protocol": "icmp",
+        "matches": [
+          {
+            "module": "icmp",
+            "match": "--icmp-type",
+            "value": "8"
+          }
+        ],
+        "target": "ACCEPT"
+      },
+      {
+        "table": "filter",
+        "chain": "INPUT",
+        "rule": "-A INPUT -s 195.135.144.144/28 -p tcp -m tcp --dport 22 -j ACCEPT",
+        "source": "195.135.144.144/28",
+        "protocol": "tcp",
+        "matches": [
+          {
+            "module": "tcp",
+            "match": "--dport",
+            "value": "22"
+          }
+        ],
+        "target": "ACCEPT"
+      },
+      {
+        "table": "filter",
+        "chain": "INPUT",
+        "rule": "-A INPUT -p tcp -m tcp --dport 80 -j ACCEPT",
+        "protocol": "tcp",
+        "matches": [
+          {
+            "module": "tcp",
+            "match": "--dport",
+            "value": "80"
+          }
+        ],
+        "target": "ACCEPT"
+      },
+      {
+        "table": "filter",
+        "chain": "INPUT",
+        "rule": "-A INPUT -p tcp -m tcp --dport 443 -j ACCEPT",
+        "protocol": "tcp",
+        "matches": [
+          {
+            "module": "tcp",
+            "match": "--dport",
+            "value": "443"
+          }
+        ],
+        "target": "ACCEPT"
+      },
+      {
+        "table": "filter",
+        "chain": "INPUT",
+        "rule": "-A INPUT -p tcp -m tcp --dport 25 -j ACCEPT",
+        "protocol": "tcp",
+        "matches": [
+          {
+            "module": "tcp",
+            "match": "--dport",
+            "value": "25"
+          }
+        ],
+        "target": "ACCEPT"
+      }
+    ]
+  }

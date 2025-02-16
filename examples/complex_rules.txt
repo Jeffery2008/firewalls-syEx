@@ -1,0 +1,48 @@
+*filter
+:INPUT DROP [0:0]
+:FORWARD DROP [0:0]
+:OUTPUT ACCEPT [0:0]
+:RATE_LIMIT - [0:0]
+:BLACKLIST - [0:0]
+
+# Custom chains for organization
+-N SERVICES
+-N MANAGEMENT
+
+# Rate limiting chain
+-A RATE_LIMIT -m state --state NEW -m recent --name CONN_RATE --set
+-A RATE_LIMIT -m state --state NEW -m recent --name CONN_RATE --update --seconds 60 --hitcount 20 -j DROP
+-A RATE_LIMIT -j RETURN
+
+# Blacklist chain for known bad actors
+-A BLACKLIST -s 192.168.1.100 -j DROP
+-A BLACKLIST -s 10.0.0.50 -j DROP
+-A BLACKLIST -j RETURN
+
+# Input chain processing
+-A INPUT -j BLACKLIST
+-A INPUT -j RATE_LIMIT
+-A INPUT -m state --state INVALID -j DROP
+-A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -j SERVICES
+-A INPUT -j MANAGEMENT
+
+# Services chain
+-A SERVICES -p tcp -m multiport --dports 80,443 -j ACCEPT
+-A SERVICES -p tcp --dport 25 -m state --state NEW -m recent --name SMTP_CONN --set
+-A SERVICES -p tcp --dport 25 -m state --state NEW -m recent --name SMTP_CONN --update --seconds 3600 --hitcount 100 -j DROP
+-A SERVICES -p tcp --dport 53 -j ACCEPT
+-A SERVICES -p udp --dport 53 -j ACCEPT
+
+# Management chain for admin access
+-A MANAGEMENT -p tcp -s 192.168.1.0/24 --dport 22 -j ACCEPT
+-A MANAGEMENT -p tcp -s 10.0.0.0/8 --dport 22 -m state --state NEW -m recent --name SSH_CONN --set
+-A MANAGEMENT -p tcp -s 10.0.0.0/8 --dport 22 -m state --state NEW -m recent --name SSH_CONN --update --seconds 300 --hitcount 5 -j DROP
+
+# Forward chain for NAT/routing
+-A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT
+-A FORWARD -i eth1 -o eth0 -j ACCEPT
+-A FORWARD -i eth0 -o eth1 -m state --state NEW -j DROP
+
+COMMIT

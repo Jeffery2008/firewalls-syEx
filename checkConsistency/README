@@ -1,0 +1,1 @@
+This function should take two SMT formulas that represent firewalls and check that they are semantically equivalent. If not, provide a counter example as a packet on which the two firewalls differ in behavior.
